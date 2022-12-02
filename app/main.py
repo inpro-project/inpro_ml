@@ -4,9 +4,23 @@ import tensorflow as tf
 import os
 from PIL import Image
 import numpy as np
+from starlette.middleware.cors import CORSMiddleware
 
 model = tf.keras.models.load_model('../model/mobilenetv2_imagenet_inpro')
 app = FastAPI()
+
+origins = [
+    "prod.inpro-server.shop",
+    "localhost:8080"
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"]
+)
 
 @app.post("/predict/image")
 async def predict_api(file: UploadFile = File(...)):
