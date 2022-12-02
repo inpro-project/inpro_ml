@@ -11,7 +11,7 @@ app = FastAPI()
 @app.post("/predict/image")
 async def predict_api(file: UploadFile = File(...)):
     contents = await file.read()
-    image_dir = os.path.join("../images", file.filename)
+    image_dir = os.path.join("../image", file.filename)
     with open(image_dir, "wb") as fp:
         fp.write(contents)
     cur_image = tf.keras.preprocessing.image.load_img(
@@ -36,7 +36,7 @@ async def predict_api(file: UploadFile = File(...)):
         pred = {
             "is_valid": True
         }
-
+    os.remove(image_dir)
     return pred
 
 if __name__ == "__main__":
