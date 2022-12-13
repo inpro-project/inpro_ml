@@ -10,8 +10,8 @@ model = tf.keras.models.load_model('../model/mobilenetv2_imagenet_inpro')
 app = FastAPI()
 
 origins = [
-    "prod.inpro-server.shop",
-    "localhost:8080"
+    "https://prod.inpro-server.shop",
+    "http://localhost:8080"
 ]
 
 app.add_middleware(
